@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+
+    <script>
+        function addKeyHint(elemnt) {
+            let textnode = Array.from(elemnt.childNodes).find(node =>
+                node.nodeName === "#text");
+            if (textnode) {
+                let ak = elemnt.getAttribute("accessKey");
+                let txt = textnode.nodeValue;
+                let pos = txt.indexOf(ak);
+
+                let newSpan = document.createElement("span");
+                newSpan.appendChild(document.createTextNode(ak));
+                newSpan.className = "accessKey";
+
+                let newtext1 = document.createTextNode(txt.substr(0, pos));
+                let newtext2 = document.createTextNode(txt.substr(pos + 1));
+
+                if (newtext1.length > 0)
+                    elemnt.insertBefore(newtext1, textnode);
+
+                elemnt.insertBefore(newSpan, textnode);
+
+                if (newtext2.length > 0)
+                    elemnt.insertBefore(newtext2, textnode);
+
+                elemnt.removeChild(textnode);
+            }
+        }
+
+        function addAccessKeyHints() {
+            var theform = document.getElementById("testform");
+            var elems = Array("LABEL", "A", "BUTTON");
+            elems.forEach(elemtype => {
+                var items = Array.from(theform.getElementsByTagName(elemtype));
+
+                items.forEach(el => {
+                    if (el.hasAttribute("accessKey")) {
+                        addKeyHint(el);
+                    }
+                });
+            });
+        }
+        window.addEventListener("load", addAccessKeyHints);
+    </script>
+
+</head>
+
+<body>
+    <h1> Form lables and field relationships</h1>
+    <p>Demonstrates how to ralate lables to fields and add basic interactiviti to the form</p>
+    <form action="" autocomplete="off" id="testform">
+        <fieldset>
+            <legend>
+                please enter your personal intormation:
+            </legend>
+            <div class="formcontainer">
+                <div class="imf">
+                    <div>
+                        <label for="field1" class="feild" accesskey="F">First name:
+             <input type="text" id="field1"  autofocus placeholder="Melika">
+               
+            </label>
+                    </div>
+                    <div>
+
+                        <label for="field2" class="feild" accesskey="L">Last name: 
+                    <input type="text" id="field2" placeholder="Asadi Pour">
+            </div>
+            <div>
+                <label for="field3" class="feild" accesskey="1">Address 1:
+             <input type="text" id="field3" size="40" placeholder="Tehran, Kaj street">
+            </label>
+                    </div>
+                    <div>
+                        <label for="field4" class="feild" accesskey="2">Address 2:
+             <input type="text" id="field4" size="40" placeholder="Tehran, Kaj street">
+            </label>
+                    </div>
+                    <div>
+                        <label for="field5" class="feild" accesskey="Z">ZIP Code:
+             <input type="text" id="field5" size="10" placeholder="1234567890">
+            </label>
+                    </div>
+                    <div>
+                        <label for="field6" class="feild" accesskey="P">Phone:
+             <input type="text" id="field6" size="15" placeholder="(+98) 937 919 5090">
+            </label>
+                    </div>
+                </div>
+                <!-- <div class="message">
+                   <input type="text" size="30px" placeholder="message"> -->
+                <textarea name="messagem" class="messageboxx" cols="60" rows="10" placeholder="message"></textarea>
+            </div>
+
+            </div>
+        </fieldset>
+        <button class="btn-submit" accesskey="S">Submit</button>
+        <button class="btn-reset" accesskey="R">Reset</button>
+    </form>
+    <scrip src="iavascript.js">
+    </scrip>
+</body>
+
+</html>
